@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rintu Chowdory — AI SaaS Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --border: #1e1e2e;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --accent: #6366f1;
+      --accent2: #8b5cf6;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient background */
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 20% 0%, rgba(99,102,241,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(139,92,246,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Navigation */
+    nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,15,0.7);
+      position: sticky;
+      top: 0;
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #6366f1, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      color: #a78bfa;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: #6366f1; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+    h1 .gradient {
+      background: linear-gradient(135deg, #6366f1 0%, #a78bfa 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 0.75rem 1.75rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.925rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(99,102,241,0.4);
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(99,102,241,0.6); }
+
+    /* Stats bar */
+    .stats {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(19,19,26,0.5);
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 1.75rem; font-weight: 800; background: linear-gradient(135deg, #6366f1, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+
+    /* Apps grid */
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section-label {
+      text-align: center;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #6366f1;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 3rem;
+      font-size: 1rem;
+    }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      gap: 1.5rem;
+    }
+    @media (max-width: 600px) { .apps-grid { grid-template-columns: 1fr; } }
+
+    .app-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .app-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--card-color, #6366f1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .app-card:hover { transform: translateY(-4px); border-color: var(--card-color, #6366f1); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .app-card:hover::before { opacity: 0.06; }
+
+    .app-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+    .app-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+    }
+    .ai-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      letter-spacing: 0.05em;
+    }
+    .app-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+    .app-tagline { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; line-height: 1.5; }
+    .app-features { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .feature-chip {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .app-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--card-color, #6366f1);
+    }
+    .app-cta svg { transition: transform 0.2s; }
+    .app-card:hover .app-cta svg { transform: translateX(4px); }
+
+    /* Tech stack section */
+    .tech-section {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 2rem;
+    }
+    .tech-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    .tech-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.8rem; }
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+    .tech-pill {
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* CTA section */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 5rem 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .cta-section h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .cta-section p { color: var(--muted); margin-bottom: 2rem; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 0.75rem 1.75rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.925rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(99,102,241,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(99,102,241,0.5); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.75rem 1.75rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.925rem;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: #6366f1; background: rgba(99,102,241,0.05); }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+    footer a { color: #6366f1; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<nav>
+  <div class="nav-logo">Rintu Chowdory</div>
+  <div class="nav-links">
+    <a href="#apps">Apps</a>
+    <a href="#stack">Stack</a>
+    <a href="https://rintu-portfolio.vercel.app" target="_blank">Portfolio</a>
+    <a href="https://github.com/rintu-chowdory" target="_blank">GitHub</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">
+    <span></span>
+    AI-Powered SaaS Applications
+  </div>
+  <h1>Building the future of<br><span class="gradient">SaaS with AI</span></h1>
+  <p class="hero-sub">4 production-ready applications built with React, Vite, and real Groq AI — deployed on GitHub Pages.</p>
+  <a href="#apps" class="hero-cta">
+    Explore the apps
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+  </a>
+</section>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">4</div>
+    <div class="stat-label">SaaS Apps</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">AI</div>
+    <div class="stat-label">Groq Powered</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">React</div>
+    <div class="stat-label">+ Vite + Tailwind</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">Live</div>
+    <div class="stat-label">GitHub Pages</div>
+  </div>
+</div>
+
+<section class="section" id="apps">
+  <div class="section-label">Portfolio</div>
+  <h2 class="section-title">4 Apps, Real AI</h2>
+  <p class="section-sub">Each app is fully deployed, responsive, and powered by Groq's llama-3.3-70b model.</p>
+
+  <div class="apps-grid">
+
+    <a href="https://rintu-chowdory.github.io/chatforge/" target="_blank" class="app-card" style="--card-color: #6366f1">
+      <div class="app-card-header">
+        <div class="app-icon">💬</div>
+        <span class="ai-badge">AI CHAT</span>
+      </div>
+      <div class="app-name">ChatForge</div>
+      <div class="app-tagline">A full-featured AI chat application with real-time streaming responses, conversation history, and multi-model support.</div>
+      <div class="app-features">
+        <span class="feature-chip">Groq LLM</span>
+        <span class="feature-chip">Streaming</span>
+        <span class="feature-chip">Chat History</span>
+        <span class="feature-chip">Dark UI</span>
+      </div>
+      <div class="app-cta">
+        Open App
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </div>
+    </a>
+
+    <a href="https://rintu-chowdory.github.io/nexcrm/" target="_blank" class="app-card" style="--card-color: #3b82f6">
+      <div class="app-card-header">
+        <div class="app-icon">👥</div>
+        <span class="ai-badge">AI CRM</span>
+      </div>
+      <div class="app-name">NexCRM</div>
+      <div class="app-tagline">Customer relationship management with an AI Email Composer — generates personalized outreach, follow-ups, and deal proposals in seconds.</div>
+      <div class="app-features">
+        <span class="feature-chip">AI Email Composer</span>
+        <span class="feature-chip">Pipeline</span>
+        <span class="feature-chip">Contacts</span>
+        <span class="feature-chip">Deals</span>
+      </div>
+      <div class="app-cta">
+        Open App
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </div>
+    </a>
+
+    <a href="https://rintu-chowdory.github.io/datapulse/" target="_blank" class="app-card" style="--card-color: #10b981">
+      <div class="app-card-header">
+        <div class="app-icon">📊</div>
+        <span class="ai-badge">AI ANALYTICS</span>
+      </div>
+      <div class="app-name">DataPulse</div>
+      <div class="app-tagline">Analytics dashboard with AI Insights — ask natural language questions about your data and get instant analysis with chart context.</div>
+      <div class="app-features">
+        <span class="feature-chip">AI Insights</span>
+        <span class="feature-chip">Live Charts</span>
+        <span class="feature-chip">NL Queries</span>
+        <span class="feature-chip">KPI Tracking</span>
+      </div>
+      <div class="app-cta">
+        Open App
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </div>
+    </a>
+
+    <a href="https://rintu-chowdory.github.io/invoiceflow/" target="_blank" class="app-card" style="--card-color: #f59e0b">
+      <div class="app-card-header">
+        <div class="app-icon">🧾</div>
+        <span class="ai-badge">AI BILLING</span>
+      </div>
+      <div class="app-name">InvoiceFlow</div>
+      <div class="app-tagline">Invoice and billing management with an AI Assistant — generates line items, payment reminders, and client communications automatically.</div>
+      <div class="app-features">
+        <span class="feature-chip">Line Item AI</span>
+        <span class="feature-chip">Payment Reminders</span>
+        <span class="feature-chip">Client Mgmt</span>
+        <span class="feature-chip">Tax Settings</span>
+      </div>
+      <div class="app-cta">
+        Open App
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<div class="tech-section" id="stack">
+  <div class="tech-inner">
+    <div class="tech-title">Built with</div>
+    <div class="tech-pills">
+      <span class="tech-pill">⚛️ React 18</span>
+      <span class="tech-pill">⚡ Vite</span>
+      <span class="tech-pill">🎨 Tailwind CSS</span>
+      <span class="tech-pill">🤖 Groq AI</span>
+      <span class="tech-pill">llama-3.3-70b</span>
+      <span class="tech-pill">🔀 React Router</span>
+      <span class="tech-pill">📦 lucide-react</span>
+      <span class="tech-pill">🚀 GitHub Actions</span>
+      <span class="tech-pill">📄 GitHub Pages</span>
+    </div>
+  </div>
+</div>
+
+<section class="cta-section">
+  <h2>Want to work together?</h2>
+  <p>I build AI-powered web applications. Let's talk about your next project.</p>
+  <div class="cta-btns">
+    <a href="https://rintu-portfolio.vercel.app" target="_blank" class="btn-primary">View Full Portfolio</a>
+    <a href="https://github.com/rintu-chowdory" target="_blank" class="btn-secondary">GitHub Profile</a>
+  </div>
+</section>
+
+<footer>
+  Built by <a href="https://rintu-portfolio.vercel.app">Rintu Chowdory</a> · React + Groq AI · Deployed on GitHub Pages
+</footer>
+
+</body>
+</html>
